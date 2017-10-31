@@ -4,6 +4,7 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -37,6 +38,12 @@ public class FloorActivity extends AppCompatActivity {
         ScaleInAnimationAdapter scaleInAnimationAdapter2 = new ScaleInAnimationAdapter(floorWiseCats);
         scaleInAnimationAdapter2.setFirstOnly(false);
         mRecyclerViewFloorCat.setAdapter(scaleInAnimationAdapter2);
+        floorWiseCats.setOnClickRV_floor(new FloorWiseCats.OnClickRV_floor() {
+            @Override
+            public void onclick(int position) {
+                startActivity(new Intent(getApplicationContext(), Video.class));
+            }
+        });
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/wild.ttf");
         headText.setTypeface(custom_font);
