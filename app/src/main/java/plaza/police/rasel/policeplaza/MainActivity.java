@@ -1,30 +1,44 @@
 package plaza.police.rasel.policeplaza;
 
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
-import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import plaza.police.rasel.policeplaza.adapters.HomeCategoryAdpater;
+import plaza.police.rasel.policeplaza.model.SingleShop;
 
 
 public class MainActivity extends AppCompatActivity {
+    ArrayList<SingleShop> list;
 
-    private TextView wlcmTV, TV_shopbyFloor, TV_ShopByCat;
-    private SeekBar seekBar;
-    private RecyclerView mRecyclerViewFloor, mRecyerViewCat;
+    RecyclerView recyclerViewCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,70 +47,106 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.first_page);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearFirstPage);
 
-        wlcmTV = (TextView) findViewById(R.id.weclome_TV);
-        TV_shopbyFloor = (TextView) findViewById(R.id.tvShopByFloor);
-        TV_ShopByCat = (TextView) findViewById(R.id.tvShopByCategory);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
 
 
-        mRecyclerViewFloor = (RecyclerView) findViewById(R.id.rv_shopByFloor);
-        mRecyerViewCat = (RecyclerView) findViewById(R.id.rv_ShopBycategory);
-
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/wild.ttf");
-        Typeface custom_font_light = Typeface.createFromAsset(getAssets(), "fonts/openight.ttf");
-        Typeface custom_regular = Typeface.createFromAsset(getAssets(), "fonts/openegular.ttf");
-
-        wlcmTV.setTypeface(custom_font);
-        TV_shopbyFloor.setTypeface(custom_regular);
-        TV_ShopByCat.setTypeface(custom_regular);
-        animateIt(wlcmTV);
-        mRecyclerViewFloor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        RV_floorAdpater floorAdpater = new RV_floorAdpater();
-        RV_catAdapter rv_catAdapter = new RV_catAdapter();
-        mRecyclerViewFloor.setAdapter(floorAdpater);
-        floorAdpater.setOnClickRV_floor(new RV_floorAdpater.OnClickRV_floor() {
+        Glide.with(this).load(R.drawable.back_first_page).asBitmap().into(new SimpleTarget<Bitmap>(width, height) {
             @Override
-            public void onclick(int position) {
-                startActivity(new Intent(getApplicationContext(), FloorActivity.class));
-            }
-        });
-
-        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(floorAdpater);
-        scaleInAnimationAdapter.setFirstOnly(false);
-        mRecyclerViewFloor.setAdapter(scaleInAnimationAdapter);
-
-
-        mRecyerViewCat.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-
-        mRecyerViewCat.setAdapter(rv_catAdapter);
-
-        ScaleInAnimationAdapter scaleInAnimationAdapter2 = new ScaleInAnimationAdapter(rv_catAdapter);
-        scaleInAnimationAdapter2.setFirstOnly(false);
-        mRecyerViewCat.setAdapter(scaleInAnimationAdapter2);
-
-        rv_catAdapter.setOnClickRV_floor(new RV_catAdapter.OnClickRV_floor() {
-            @Override
-            public void onclick(int position) {
-                startActivity(new Intent(getApplicationContext(), FloorActivity.class));
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Drawable drawable = new BitmapDrawable(getResources(), resource);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    linearLayout.setBackground(drawable);
+                }
             }
         });
 
 
+        InputStream inputStream = getResources().openRawResource(R.raw.floorone);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        int ctr;
+        try {
+            ctr = inputStream.read();
+            while (ctr != -1) {
+                byteArrayOutputStream.write(ctr);
+                ctr = inputStream.read();
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.v("Text Data", byteArrayOutputStream.toString());
+        try {
+            // Parse the data into jsonobject to get original data in form of json.
+            JSONObject jObject = new JSONObject(
+                    byteArrayOutputStream.toString());
+            JSONArray jObjectResult = jObject.getJSONArray("AllInfo");
+
+            list = new ArrayList<>();
+            if (jObjectResult != null) {
+                int len = jObjectResult.length();
+                for (int i = 0; i < len; i++) {
+                    JSONObject o = (JSONObject) jObjectResult.get(i);
+                    list.add(new SingleShop(o.getString("RealOwner"), o.getString("TenantsName"), o.getString("ShopNO"), o.getString("FloorNo"),
+
+
+                            o.getString("FloorIconName"), o.getString("ShopName"), o.getString("ItemsofShop"), o.getString("catIconName"),
+
+
+                            o.getString("marginLeft"), o.getString("marginRight"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
+
+
+                            o.getString("shopImageThreeName"), o.getString("ShopStatus")));
+                }
+            }
+
+        } catch (Exception e) {
+            Log.e("hadddd", "onCreate: "+String.valueOf(e) );
+            e.printStackTrace();
+        }
+
+        List<SingleShop> result = new ArrayList<SingleShop>();
+        Set<String> titles = new HashSet<String>();
+
+        for (SingleShop item : list) {
+            if (titles.add(item.getItemsofShop())) {
+                result.add(item);
+            }
+        }
+
+        Log.e("myValueCheck", "onCreate: " + String.valueOf(list));
+
+        recyclerViewCategory = (RecyclerView) findViewById(R.id.recylerViewCategory);
+
+        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
+        homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
+            @Override
+            public void onClickCategory(int position) {
+                Intent intent = new Intent(getApplicationContext(), FloorActivity.class);
+                Bundle bundleSendToDdealUpload = new Bundle();
+                bundleSendToDdealUpload.putString("catName", result.get(position).getItemsofShop());
+                bundleSendToDdealUpload.putParcelableArrayList("shopList", list);
+                intent.putExtras(bundleSendToDdealUpload);
+                startActivity(intent);
+
+            }
+        });
+        recyclerViewCategory.setAdapter(homeCategoryAdpater);
+
     }
 
-    public void animateIt(TextView wlcmTV) {
-        ObjectAnimator a = ObjectAnimator.ofInt(wlcmTV, "textColor", Color.GREEN, Color.RED);
-        a.setInterpolator(new LinearInterpolator());
-        a.setDuration(1000);
-        a.setRepeatCount(ValueAnimator.INFINITE);
-        a.setRepeatMode(ValueAnimator.REVERSE);
-        a.setEvaluator(new ArgbEvaluator());
-        AnimatorSet t = new AnimatorSet();
-        t.play(a);
-        t.start();
+    public void goToFloor(View view) {
+        startActivity(new Intent(this, FloorActivity.class));
     }
 
-
+    public void goToCategory(View view) {
+        startActivity(new Intent(this, CategoryActivity.class));
+    }
 }
 

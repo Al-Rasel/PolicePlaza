@@ -1,100 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearFirstPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/back_first_page"
     android:gravity="center"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/plc" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#e0161616" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/weclome_TV"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="16dp"
-                android:text="WELCOME TO PLOICE PLAZA"
+                android:orientation="horizontal">
 
-                android:textColor="#fff"
-                android:textSize="48sp" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="26dp"
-                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="310dp"
+                        android:layout_height="150dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="18dp"
+
+                        android:background="@drawable/first_page_block">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:onClick="goToFloor"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="85dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/f_gero" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="85dp"
+                                android:layout_gravity="center"
+
+                                android:layout_weight="1"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/f_one" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="85dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/f_two" />
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/tvShopByFloor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="Shop by floor : "
-                        android:textColor="#fff"
-                        android:textSize="18sp" />
+                        android:layout_marginLeft="42dp"
+                        android:background="#385483"
+                        android:padding="8dp"
+                        android:text="SEARCH BY FLOOR"
+                        android:textColor="#ffff"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_shopByFloor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:clipToPadding="false"
-                        android:paddingLeft="100dp"
-                        android:paddingRight="100dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/arrowbig" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+
+                    <RelativeLayout
+                        android:layout_width="310dp"
+                        android:layout_height="140dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="18dp"
+
+                        android:background="@drawable/first_page_block">
+
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recylerViewCategory"
+                            android:layout_width="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </RelativeLayout>
 
                     <TextView
-                        android:id="@+id/tvShopByCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="26dp"
-                        android:text="Shop by Category : "
-                        android:textColor="#fff"
-                        android:textSize="18sp" />
+                        android:layout_marginLeft="42dp"
+                        android:background="#385483"
+                        android:padding="8dp"
+                        android:text="SEARCH BY CATEGORY"
+                        android:textColor="#ffff"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_ShopBycategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="26dp"
-                        android:layout_marginTop="16dp"
-                        android:clipToPadding="false"
-                        android:paddingLeft="100dp"
-                        android:paddingRight="100dp" />
+                </RelativeLayout>
 
-
-                </LinearLayout>
-
-
-            </ScrollView>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/arrowbig" />
+            </LinearLayout>
 
         </LinearLayout>
+
+
     </RelativeLayout>
 
 

@@ -3,17 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/mapRelative"
     android:layout_height="match_parent"
-    android:background="#000"
-    tools:context="plaza.police.rasel.policeplaza.Video">
 
+    tools:context="plaza.police.rasel.policeplaza.Map_Activity">
 
-
-    <com.github.chrisbanes.photoview.PhotoView
-        android:id="@+id/imageView"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:scaleType="centerCrop"
+        android:id="@+id/mainImage"
+      />
+
+
 
 
 </RelativeLayout>

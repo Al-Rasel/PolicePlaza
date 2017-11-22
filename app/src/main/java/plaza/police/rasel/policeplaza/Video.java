@@ -6,29 +6,48 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.VideoView;
+
+import com.github.chrisbanes.photoview.PhotoView;
 
 public class Video extends AppCompatActivity {
-    VideoView videoView;
+    PhotoView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         overridePendingTransition(R.anim.enter, R.anim.exit);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_video);
-        videoView = (VideoView) findViewById(R.id.videoView);
-
+        imageView = (PhotoView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.shareing);
         getWindow().setFormat(PixelFormat.UNKNOWN);
 
-        String uriPath2 = "android.resource://plaza.police.rasel.policeplaza/"+R.raw.vid;
+   /*     imageView.setOnClickListener(new View.OnClickListener() {
+            //@Override
+            public void onClick(View v) {
+                Log.e("TAGIIN", " click");
+            }
+        });
+
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // X = event.getX()
+                // Y = event.getY()
+
+                Log.e("TAGIIN", " touch" + event.getX() + " check " + event.getY());
+                return false;
+            }
+        });*/
+
+
+        String uriPath2 = "android.resource://plaza.police.rasel.policeplaza/" + R.raw.vid;
         Uri uri2 = Uri.parse(uriPath2);
-        videoView.setVideoURI(uri2);
+        /*videoView.setVideoURI(uri2);
         videoView.requestFocus();
-        videoView.start();
+        videoView.start();*/
 
 /*
 *

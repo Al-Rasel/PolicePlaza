@@ -1,26 +1,37 @@
 package plaza.police.rasel.policeplaza;
 
-import android.animation.AnimatorSet;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import plaza.police.rasel.policeplaza.adapters.FloorAdapter;
+import plaza.police.rasel.policeplaza.model.SingleShop;
 
 public class FloorActivity extends AppCompatActivity {
     TextView headText;
-    RecyclerView mRecyclerViewFloorCat;
+    RecyclerView mRecyclerViewFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,36 +41,69 @@ public class FloorActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_floor);
-        headText = (TextView) findViewById(R.id.weclome_TV);
-        mRecyclerViewFloorCat = (RecyclerView) findViewById(R.id.rvCats);
-        mRecyclerViewFloorCat.setLayoutManager(new GridLayoutManager(this, 3));
-        FloorWiseCats floorWiseCats = new FloorWiseCats();
-        mRecyclerViewFloorCat.setAdapter(floorWiseCats);
-        ScaleInAnimationAdapter scaleInAnimationAdapter2 = new ScaleInAnimationAdapter(floorWiseCats);
-        scaleInAnimationAdapter2.setFirstOnly(false);
-        mRecyclerViewFloorCat.setAdapter(scaleInAnimationAdapter2);
-        floorWiseCats.setOnClickRV_floor(new FloorWiseCats.OnClickRV_floor() {
+
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearSecondPage);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Glide.with(this).load(R.drawable.back_second).asBitmap().into(new SimpleTarget<Bitmap>(width, height) {
             @Override
-            public void onclick(int position) {
-                startActivity(new Intent(getApplicationContext(), Video.class));
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Drawable drawable = new BitmapDrawable(getResources(), resource);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    linearLayout.setBackground(drawable);
+                }
             }
         });
 
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/wild.ttf");
-        headText.setTypeface(custom_font);
-        animateIt(headText);
+        ArrayList<SingleShop> myList = getIntent().getExtras().getParcelableArrayList("shopList");
+        String catName = getIntent().getStringExtra("catName");
+        List<SingleShop> selectedFloor = new ArrayList<>();
+
+
+        for (SingleShop sort : myList
+                ) {
+            if (catName.equals(sort.getItemsofShop()))
+                selectedFloor.add(sort);
+        }
+
+
+        List<SingleShop> result = new ArrayList<SingleShop>();
+        Set<String> titles = new HashSet<String>();
+
+        Toast.makeText(this, catName, Toast.LENGTH_SHORT).show();
+
+        for (SingleShop item : selectedFloor) {
+            if (titles.add(item.getFloorIconName())) {
+                result.add(item);
+            }
+        }
+
+        Log.e("tageee", "onCreate: 1   " + String.valueOf(result));
+
+
+        Log.e("tageee", "onCreate: 22  " + String.valueOf(selectedFloor));
+
+        mRecyclerViewFloor = (RecyclerView) findViewById(R.id.RV_floors);
+
+        mRecyclerViewFloor.setLayoutManager(new GridLayoutManager(this, 3));
+        FloorAdapter homeCategoryAdpater = new FloorAdapter(result);
+        homeCategoryAdpater.setOnClickCategory(new FloorAdapter.OnClickCategory() {
+            @Override
+            public void onClickCategory(int position) {
+                startActivity(new Intent(getApplicationContext(), Map_Activity.class));
+            }
+        });
+        mRecyclerViewFloor.setAdapter(homeCategoryAdpater);
+
 
     }
 
-    public void animateIt(TextView wlcmTV) {
-        ObjectAnimator a = ObjectAnimator.ofInt(wlcmTV, "textColor", Color.GREEN, Color.RED);
-        a.setInterpolator(new LinearInterpolator());
-        a.setDuration(1000);
-        a.setRepeatCount(ValueAnimator.INFINITE);
-        a.setRepeatMode(ValueAnimator.REVERSE);
-        a.setEvaluator(new ArgbEvaluator());
-        AnimatorSet t = new AnimatorSet();
-        t.play(a);
-        t.start();
-    }
+
 }
+
+
+
