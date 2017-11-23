@@ -15,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -74,7 +73,7 @@ public class FloorActivity extends AppCompatActivity {
         List<SingleShop> result = new ArrayList<SingleShop>();
         Set<String> titles = new HashSet<String>();
 
-        Toast.makeText(this, catName, Toast.LENGTH_SHORT).show();
+
 
         for (SingleShop item : selectedFloor) {
             if (titles.add(item.getFloorIconName())) {
@@ -94,7 +93,7 @@ public class FloorActivity extends AppCompatActivity {
         homeCategoryAdpater.setOnClickCategory(new FloorAdapter.OnClickCategory() {
             @Override
             public void onClickCategory(int position) {
-                startActivity(new Intent(getApplicationContext(), Map_Activity.class));
+                startActivity(new Intent(getApplicationContext(), Map_Activity.class).putExtra("allShops", myList).putExtra("catName", catName).putExtra("floorName", result.get(position).getFloorIconName()));
             }
         });
         mRecyclerViewFloor.setAdapter(homeCategoryAdpater);

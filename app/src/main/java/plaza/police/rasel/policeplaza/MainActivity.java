@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import plaza.police.rasel.policeplaza.adapters.FloorAdapter;
 import plaza.police.rasel.policeplaza.adapters.HomeCategoryAdpater;
 import plaza.police.rasel.policeplaza.model.SingleShop;
 
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<SingleShop> list;
 
     RecyclerView recyclerViewCategory;
+
+    RecyclerView recyclerViewFloor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } catch (Exception e) {
-            Log.e("hadddd", "onCreate: "+String.valueOf(e) );
+            Log.e("hadddd", "onCreate: " + String.valueOf(e));
             e.printStackTrace();
         }
 
-        List<SingleShop> result = new ArrayList<SingleShop>();
+        ArrayList<SingleShop> result = new ArrayList<SingleShop>();
         Set<String> titles = new HashSet<String>();
 
         for (SingleShop item : list) {
@@ -122,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         Log.e("myValueCheck", "onCreate: " + String.valueOf(list));
 
         recyclerViewCategory = (RecyclerView) findViewById(R.id.recylerViewCategory);
+
+        recyclerViewFloor = (RecyclerView) findViewById(R.id.recylerViewFloor);
 
         recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
@@ -138,6 +143,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerViewCategory.setAdapter(homeCategoryAdpater);
+
+
+        List<SingleShop> floorList = new ArrayList<>();
+
+
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_gero", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_one", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_two", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_three", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_four", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_five", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+
+
+        recyclerViewFloor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        FloorAdapter homeFloor = new FloorAdapter(floorList);
+        homeFloor.setOnClickCategory(new FloorAdapter.OnClickCategory() {
+            @Override
+            public void onClickCategory(int position) {
+                startActivity(new Intent(getApplicationContext(), CategoryActivity.class).putExtra("allCats", list).putExtra("floorName", floorList.get(position).getFloorIconName()));
+            }
+        });
+        recyclerViewFloor.setAdapter(homeFloor);
+
 
     }
 
