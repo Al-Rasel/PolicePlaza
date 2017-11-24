@@ -72,7 +72,7 @@ public class FloorActivity extends AppCompatActivity {
 
         List<SingleShop> result = new ArrayList<SingleShop>();
         Set<String> titles = new HashSet<String>();
-
+//l
 
 
         for (SingleShop item : selectedFloor) {
