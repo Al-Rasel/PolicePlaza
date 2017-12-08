@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -41,23 +42,13 @@ public class SingleShopActivity extends AppCompatActivity {
 
         SingleShop singleShop = myList.get(shopID);
 
-        TextView textViewRealOwner, textViewTesName, textViewShopNo, textViewIteamOfShop, textViewOn;
+        TextView textViewShopName;
 
-        textViewRealOwner = (TextView) findViewById(R.id.realOwner);
-
-
-        textViewTesName = (TextView) findViewById(R.id.tenantsName);
-        textViewShopNo = (TextView) findViewById(R.id.ShopNO);
-        textViewIteamOfShop = (TextView) findViewById(R.id.ItemsofShop);
-        textViewOn = (TextView) findViewById(R.id.ShopStatus);
-
+        textViewShopName = (TextView) findViewById(R.id.shopName);
 
         try {
-            textViewRealOwner.setText(singleShop.getRealOwner());
-            textViewTesName.setText(singleShop.getTenantsName());
-            textViewShopNo.setText(singleShop.getShopNO());
-            textViewIteamOfShop.setText(singleShop.getItemsofShop());
-            textViewOn.setText(singleShop.getShopStatus());
+
+            textViewShopName.setText(singleShop.getShopName() + " (" + singleShop.getShopNO() + " )");
         } catch (Exception e) {
         }
 
@@ -74,14 +65,25 @@ public class SingleShopActivity extends AppCompatActivity {
 
         int drawableResourceId3 = getResources().getIdentifier(singleShop.getShopImageThreeName(), "drawable", getPackageName());
 
+        if (drawableResourceId1 != 0) {
+            banners.add(new DrawableBanner(drawableResourceId1));
+        }
+        if (drawableResourceId2 != 0) {
+            banners.add(new DrawableBanner(drawableResourceId2));
+        }
+        if (drawableResourceId3 != 0) {
+            banners.add(new DrawableBanner(drawableResourceId3));
+        }
+
+
         //add banner using image url
-        banners.add(new DrawableBanner(drawableResourceId1));
-        banners.add(new DrawableBanner(drawableResourceId2));
+
+
         //add banner using resource drawable
-        banners.add(new DrawableBanner(drawableResourceId3));
+
         bannerSlider.setBanners(banners);
 
-        LinearLayout shopDeatlis= (LinearLayout) findViewById(R.id.shopDetails);
+        LinearLayout shopDeatlis = (LinearLayout) findViewById(R.id.shopDetails);
 
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -98,7 +100,12 @@ public class SingleShopActivity extends AppCompatActivity {
                 }
             }
         });
-
+        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 }

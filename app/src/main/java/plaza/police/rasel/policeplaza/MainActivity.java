@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                             o.getString("FloorIconName"), o.getString("ShopName"), o.getString("ItemsofShop"), o.getString("catIconName"),
 
 
-                            o.getString("marginLeft"), o.getString("marginRight"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
+                            o.getString("marginLeft"), o.getString("marginTop"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
 
 
                             o.getString("shopImageThreeName"), o.getString("ShopStatus")));

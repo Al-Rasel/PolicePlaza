@@ -64,12 +64,17 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
         Glide
                 .with(this)
-                .load(R.drawable.map)
+                .load(R.drawable.floor_g)
 
                 .thumbnail(0.1f)
                 .into(imageViewMap);
 
-
+        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
