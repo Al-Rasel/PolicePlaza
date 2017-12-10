@@ -127,7 +127,6 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         Glide
                 .with(this)
                 .load(R.drawable.check)
-
                 .thumbnail(0.1f)
                 .into(imageView);
 

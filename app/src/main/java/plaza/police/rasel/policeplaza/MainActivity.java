@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewFloor = (RecyclerView) findViewById(R.id.recylerViewFloor);
 
-        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewCategory.setLayoutManager(new GridLayoutManager(getApplicationContext(), 6));
         HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
         homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
             @Override
