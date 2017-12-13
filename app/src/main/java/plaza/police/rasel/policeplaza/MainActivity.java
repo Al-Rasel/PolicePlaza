@@ -1,5 +1,6 @@
 package plaza.police.rasel.policeplaza;
 
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -34,7 +36,6 @@ import java.util.Set;
 import plaza.police.rasel.policeplaza.adapters.FloorAdapter;
 import plaza.police.rasel.policeplaza.adapters.HomeCategoryAdpater;
 import plaza.police.rasel.policeplaza.model.SingleShop;
-
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<SingleShop> list;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             o.getString("FloorIconName"), o.getString("ShopName"), o.getString("ItemsofShop"), o.getString("catIconName"),
 
 
-                            o.getString("marginLeft"), o.getString("marginRight"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
+                            o.getString("marginLeft"), o.getString("marginTop"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
 
 
                             o.getString("shopImageThreeName"), o.getString("ShopStatus")));
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerViewFloor = (RecyclerView) findViewById(R.id.recylerViewFloor);
 
-        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewCategory.setLayoutManager(new GridLayoutManager(getApplicationContext(), 6));
         HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
         homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
             @Override
@@ -153,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_two", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
         floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_three", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
         floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_four", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_five", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
 
 
         recyclerViewFloor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -177,4 +177,3 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, CategoryActivity.class));
     }
 }
-

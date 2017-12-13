@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import plaza.police.rasel.policeplaza.model.SingleShop;
 
+import static com.bumptech.glide.load.engine.DiskCacheStrategy.ALL;
+
 public class Map_Activity extends AppCompatActivity implements View.OnClickListener {
     RelativeLayout mRelativeLayout;
     ArrayList<SingleShop> markerList;
@@ -38,6 +40,15 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_map_);
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mapRelative);
+
+        ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+        Glide
+                .with(this)
+                .load(R.drawable.floor_g)
+                .asBitmap()
+                .atMost()
+                .diskCacheStrategy(ALL)
+                .into(imageViewMap);
 
         ArrayList<SingleShop> myList = getIntent().getExtras().getParcelableArrayList("allShops");
         String catName = getIntent().getStringExtra("catName");
@@ -61,15 +72,12 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
-        Glide
-                .with(this)
-                .load(R.drawable.map)
-
-                .thumbnail(0.1f)
-                .into(imageViewMap);
-
-
+        findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -77,14 +85,15 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         try {
             startActivity(new Intent(this, SingleShopActivity.class).putExtra("shoplist", markerList).putExtra("id", v.getId()));
         } catch (Exception e) {
-            Toast.makeText(this,String.valueOf(e),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.valueOf(e), Toast.LENGTH_SHORT).show();
 
         }
     }
 
     public void setMarker(int marginLeftFromMethod, int marginTopFromMethod, String ShopName, int id) {
 
-
+        int aleft = (int) (1.26865 * marginLeftFromMethod);
+        int aright = (int) (1.428571 * marginTopFromMethod);
         float d = getResources().getDisplayMetrics().density;
         int marginleft = (int) (100 * d);
 
@@ -95,9 +104,19 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
                 marginleft, RelativeLayout.LayoutParams.WRAP_CONTENT);
         layoutSection.setOrientation(LinearLayout.VERTICAL);
 
+        if (ShopName.equals("Time Zone")) {
 
-        params.leftMargin = (int) (marginLeftFromMethod * d);
-        params.topMargin = (int) (marginTopFromMethod * d);
+            params.leftMargin = (int) (marginLeftFromMethod * d);
+            params.topMargin = (int) (marginTopFromMethod * d);
+
+        } else {
+
+            params.leftMargin = (int) (aleft * d);
+            params.topMargin = (int) (aright * d);
+
+        }
+
+
         int marginleft22 = (int) (50 * d);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(marginleft22, marginleft22);
         layoutSection.setId(id);
@@ -122,7 +141,6 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         Glide
                 .with(this)
                 .load(R.drawable.check)
-
                 .thumbnail(0.1f)
                 .into(imageView);
 

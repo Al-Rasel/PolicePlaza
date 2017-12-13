@@ -12,33 +12,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="36dp">
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/RV_floors"
             android:layout_width="match_parent"
+            android:layout_margin="36dp"
             android:layout_height="match_parent" />
+
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp"
+
+            android:src="@drawable/back_btn" />
         <!-- <LinearLayout
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_centerInParent="true"
              android:layout_margin="36dp"
              android:orientation="vertical">
-
              <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:weightSum="3">
-
                  <ImageView
                      android:id="@+id/imageViewOne"
                      android:layout_width="0dp"
                      android:layout_height="115dp"
                      android:layout_weight="1"
-
                      android:adjustViewBounds="true"
                    />
-
                  <ImageView
                      android:id="@+id/imageViewTwo"
                      android:layout_width="0dp"
@@ -46,7 +54,6 @@
                      android:layout_weight="1"
                      android:adjustViewBounds="true"
                    />
-
                  <ImageView
                      android:id="@+id/imageViewThree"
                      android:layout_width="0dp"
@@ -54,15 +61,12 @@
                      android:layout_weight="1"
                      android:adjustViewBounds="true"
                />
-
              </LinearLayout>
-
              <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_marginTop="36dp"
                  android:weightSum="3">
-
                  <ImageView
                      android:id="@+id/imageViewFour"
                      android:layout_width="0dp"
@@ -70,7 +74,6 @@
                      android:layout_weight="1"
                      android:adjustViewBounds="true"
                 />
-
                  <ImageView
                      android:id="@+id/imageViewFive"
                      android:layout_width="0dp"
@@ -78,7 +81,6 @@
                      android:layout_weight="1"
                      android:adjustViewBounds="true"
                    />
-
                  <ImageView
                      android:id="@+id/imageViewSix"
                      android:layout_width="0dp"
@@ -86,9 +88,7 @@
                      android:layout_weight="1"
                      android:adjustViewBounds="true"
                      />
-
              </LinearLayout>
-
          </LinearLayout>-->
 
 

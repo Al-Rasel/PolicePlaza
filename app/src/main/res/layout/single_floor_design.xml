@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/singleCatImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="127dp"
+        android:layout_height="127dp"
 
         android:layout_gravity="center"
         android:adjustViewBounds="true" />
