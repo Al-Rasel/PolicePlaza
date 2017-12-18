@@ -58,14 +58,37 @@ public class SingleShopActivity extends AppCompatActivity {
         List<Banner> banners = new ArrayList<>();
 
 
+
+
         int drawableResourceId1 = getResources().getIdentifier(singleShop.getShopImageOneName(), "drawable", getPackageName());
 
+
         int drawableResourceId2 = getResources().getIdentifier(singleShop.getShopImageTwoName(), "drawable", getPackageName());
-
-
         int drawableResourceId3 = getResources().getIdentifier(singleShop.getShopImageThreeName(), "drawable", getPackageName());
 
+
+
+
+        if (drawableResourceId1==0){
+             drawableResourceId1 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_1", "drawable", getPackageName());
+
+
+
+        }
+        if (drawableResourceId2==0){
+             drawableResourceId2 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_2", "drawable", getPackageName());
+
+        }
+
+
+        if (drawableResourceId3==0){
+            drawableResourceId3 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_3", "drawable", getPackageName());
+
+        }
+
         if (drawableResourceId1 != 0) {
+
+
             banners.add(new DrawableBanner(drawableResourceId1));
         }
         if (drawableResourceId2 != 0) {

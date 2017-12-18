@@ -41,20 +41,63 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
 
         mRelativeLayout = (RelativeLayout) findViewById(R.id.mapRelative);
 
-        ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
-        Glide
-                .with(this)
-                .load(R.drawable.floor_g)
-                .asBitmap()
-                .atMost()
-                .diskCacheStrategy(ALL)
-                .into(imageViewMap);
 
         ArrayList<SingleShop> myList = getIntent().getExtras().getParcelableArrayList("allShops");
         String catName = getIntent().getStringExtra("catName");
         String floorName = getIntent().getStringExtra("floorName");
 
+
         Log.e("floors", "onCreate: " + catName + "  " + floorName + "   " + String.valueOf(myList));
+
+        if (floorName.equals("f_gero")) {
+
+            ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+            Glide
+                    .with(this)
+                    .load(R.drawable.floor_g)
+                    .asBitmap()
+                    .atMost()
+                    .diskCacheStrategy(ALL)
+                    .into(imageViewMap);
+
+        } else if (floorName.equals("f_one")) {
+            ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+            Glide
+                    .with(this)
+                    .load(R.drawable.f_one_map)
+                    .asBitmap()
+                    .atMost()
+                    .diskCacheStrategy(ALL)
+                    .into(imageViewMap);
+        } else if (floorName.equals("f_two")) {
+            ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+            Glide
+                    .with(this)
+                    .load(R.drawable.f_two_map)
+                    .asBitmap()
+                    .atMost()
+                    .diskCacheStrategy(ALL)
+                    .into(imageViewMap);
+        } else if (floorName.equals("f_three")) {
+            ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+            Glide
+                    .with(this)
+                    .load(R.drawable.f_three_map)
+                    .asBitmap()
+                    .atMost()
+                    .diskCacheStrategy(ALL)
+                    .into(imageViewMap);
+        } else if (floorName.equals("f_four")) {
+            ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
+            Glide
+                    .with(this)
+                    .load(R.drawable.f_four_map)
+                    .asBitmap()
+                    .atMost()
+                    .diskCacheStrategy(ALL)
+                    .into(imageViewMap);
+        }
+
 
         markerList = new ArrayList<>();
 

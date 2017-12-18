@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         int width = displayMetrics.widthPixels;
 
 
-        Glide.with(this).load(R.drawable.back_first_page).asBitmap().into(new SimpleTarget<Bitmap>(width, height) {
+        Glide.with(this).load(R.drawable.floor_ge).asBitmap().into(new SimpleTarget<Bitmap>(width, height) {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 Drawable drawable = new BitmapDrawable(getResources(), resource);

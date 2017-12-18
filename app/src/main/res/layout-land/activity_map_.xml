@@ -17,13 +17,7 @@
 
         />
 
-    <!--    <ImageView
-     android:src="@drawable/floor_g"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/check"
-            android:layout_marginLeft="585dp"
-            android:layout_marginTop="275dp"/>-->
+
 
     <ImageView
         android:id="@+id/backButton"

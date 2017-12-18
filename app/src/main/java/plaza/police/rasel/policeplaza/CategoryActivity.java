@@ -83,7 +83,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.RV_Category);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
         HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
 
         homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
