@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                             o.getString("marginLeft"), o.getString("marginTop"), o.getString("shopImageOneName"), o.getString("shopImageTwoName"),
 
 
-                            o.getString("shopImageThreeName"), o.getString("ShopStatus")));
+                            o.getString("shopImageThreeName"), o.getString("ShopStatus"),o.getString("isOthers"),o.getString("ItemOfShopTwo"),o.getString("ItemOfShopThree")));
                 }
             }
 
@@ -114,32 +115,84 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayList<SingleShop> result = new ArrayList<SingleShop>();
+        ArrayList<SingleShop> result = new ArrayList<SingleShop>(12);
+        for (int i = 0; i <12 ; i++) {
+            result.add(new SingleShop("aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa","aa"));
+        }
+
         Set<String> titles = new HashSet<String>();
 
         for (SingleShop item : list) {
             if (titles.add(item.getItemsofShop())) {
-                result.add(item);
+                if(item.getItemsofShop().equals("Gents Collection")){
+                    result.add(0,item);
+                }else if(item.getItemsofShop().equals("Ladies Collection")){
+                    result.add(1,item);
+                }else if(item.getItemsofShop().equals("Kids Collection")){
+                    result.add(2,item);
+                }else if(item.getItemsofShop().equals("Cosmetics")){
+                    result.add(3,item);
+                }else if(item.getItemsofShop().equals("Mobile & Tab")){
+                    result.add(4,item);
+                }else if(item.getItemsofShop().equals("Computer & Electronics")){
+                    result.add(5,item);
+                }else if(item.getItemsofShop().equals("Gold and Diamond")){
+                    result.add(6,item);
+                }else if(item.getItemsofShop().equals("Imitation")){
+                    result.add(7,item);
+                }else if(item.getItemsofShop().equals("Households")){
+                    result.add(8,item);
+                }else if(item.getItemsofShop().equals("Leather & shoes")){
+                    result.add(9,item);
+                }else if(item.getItemsofShop().equals("Food")){
+                    result.add(10,item);
+                }else if(item.getItemsofShop().equals("Others")){
+                    result.add(11,item);
+                }
+
             }
         }
 
-        Log.e("myValueCheck", "onCreate: " + String.valueOf(list));
+        for (Iterator<SingleShop> iterator = result.iterator(); iterator.hasNext(); ) {
+            String value = iterator.next().getItemsofShop();
+            if (value.equals("aa")) {
+                iterator.remove();
+            }
+        }
+
 
         recyclerViewCategory = (RecyclerView) findViewById(R.id.recylerViewCategory);
 
         recyclerViewFloor = (RecyclerView) findViewById(R.id.recylerViewFloor);
 
         recyclerViewCategory.setLayoutManager(new GridLayoutManager(getApplicationContext(), 6));
+
+
+        Log.e("eedee", "onCreate: "+String.valueOf(result) );
         HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
         homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
             @Override
             public void onClickCategory(int position) {
-                Intent intent = new Intent(getApplicationContext(), FloorActivity.class);
-                Bundle bundleSendToDdealUpload = new Bundle();
-                bundleSendToDdealUpload.putString("catName", result.get(position).getItemsofShop());
-                bundleSendToDdealUpload.putParcelableArrayList("shopList", list);
-                intent.putExtras(bundleSendToDdealUpload);
-                startActivity(intent);
+
+                if (result.get(position).getItemsofShop().equals("Others")){
+
+                    Intent intent = new Intent(getApplicationContext(), OthersActivity.class);
+            /*        Bundle bundleSendToDdealUpload = new Bundle();
+                    bundleSendToDdealUpload.putString("catName", result.get(position).getItemsofShop());
+                    bundleSendToDdealUpload.putParcelableArrayList("shopList", list);
+                    intent.putExtras(bundleSendToDdealUpload);*/
+                    startActivity(intent);
+
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), FloorActivity.class);
+                    Bundle bundleSendToDdealUpload = new Bundle();
+                    bundleSendToDdealUpload.putString("catName", result.get(position).getItemsofShop());
+                    bundleSendToDdealUpload.putParcelableArrayList("shopList", list);
+                    intent.putExtras(bundleSendToDdealUpload);
+                    startActivity(intent);
+                }
+
+
 
             }
         });
@@ -149,11 +202,11 @@ public class MainActivity extends AppCompatActivity {
         List<SingleShop> floorList = new ArrayList<>();
 
 
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_gero", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_one", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_two", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_three", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
-        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_four", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_gero", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real","ee","ee","ee"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_one", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real","ee","ee","ee"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_two", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real","ee","ee","ee"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_three", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real","ee","ee","ee"));
+        floorList.add(new SingleShop("real", "ten", "ee", "aad", "f_four", "ten", "ee", "aad", "real", "real", "ten", "ee", "aad", "real","ee","ee","ee"));
 
 
         recyclerViewFloor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

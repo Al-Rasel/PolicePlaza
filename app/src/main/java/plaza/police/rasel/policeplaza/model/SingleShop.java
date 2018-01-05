@@ -23,8 +23,11 @@ public class SingleShop  implements Parcelable {
     String shopImageTwoName;
     String shopImageThreeName;
     String ShopStatus;
+    String isOthers;
+    String ItemOfShopTwo;
+    String ItemOfShopThree;
 
-    public SingleShop(String realOwner, String tenantsName, String shopNO, String floorNo, String floorIconName, String shopName, String itemsofShop, String catIconName, String marginLeft, String marginRight, String shopImageOneName, String shopImageTwoName, String shopImageThreeName, String shopStatus) {
+    public SingleShop(String realOwner, String tenantsName, String shopNO, String floorNo, String floorIconName, String shopName, String itemsofShop, String catIconName, String marginLeft, String marginRight, String shopImageOneName, String shopImageTwoName, String shopImageThreeName, String shopStatus, String isOthers, String itemOfShopTwo, String itemOfShopThree) {
         RealOwner = realOwner;
         TenantsName = tenantsName;
         ShopNO = shopNO;
@@ -39,6 +42,9 @@ public class SingleShop  implements Parcelable {
         this.shopImageTwoName = shopImageTwoName;
         this.shopImageThreeName = shopImageThreeName;
         ShopStatus = shopStatus;
+        this.isOthers = isOthers;
+        ItemOfShopTwo = itemOfShopTwo;
+        ItemOfShopThree = itemOfShopThree;
     }
 
     protected SingleShop(Parcel in) {
@@ -56,6 +62,9 @@ public class SingleShop  implements Parcelable {
         shopImageTwoName = in.readString();
         shopImageThreeName = in.readString();
         ShopStatus = in.readString();
+        isOthers = in.readString();
+        ItemOfShopTwo = in.readString();
+        ItemOfShopThree = in.readString();
     }
 
     public static final Creator<SingleShop> CREATOR = new Creator<SingleShop>() {
@@ -182,6 +191,30 @@ public class SingleShop  implements Parcelable {
         ShopStatus = shopStatus;
     }
 
+    public String getIsOthers() {
+        return isOthers;
+    }
+
+    public void setIsOthers(String isOthers) {
+        this.isOthers = isOthers;
+    }
+
+    public String getItemOfShopTwo() {
+        return ItemOfShopTwo;
+    }
+
+    public void setItemOfShopTwo(String itemOfShopTwo) {
+        ItemOfShopTwo = itemOfShopTwo;
+    }
+
+    public String getItemOfShopThree() {
+        return ItemOfShopThree;
+    }
+
+    public void setItemOfShopThree(String itemOfShopThree) {
+        ItemOfShopThree = itemOfShopThree;
+    }
+
     @Override
     public String toString() {
         return "SingleShop{" +
@@ -199,6 +232,9 @@ public class SingleShop  implements Parcelable {
                 ", shopImageTwoName='" + shopImageTwoName + '\'' +
                 ", shopImageThreeName='" + shopImageThreeName + '\'' +
                 ", ShopStatus='" + ShopStatus + '\'' +
+                ", isOthers='" + isOthers + '\'' +
+                ", ItemOfShopTwo='" + ItemOfShopTwo + '\'' +
+                ", ItemOfShopThree='" + ItemOfShopThree + '\'' +
                 '}';
     }
 
@@ -223,5 +259,8 @@ public class SingleShop  implements Parcelable {
         dest.writeString(shopImageTwoName);
         dest.writeString(shopImageThreeName);
         dest.writeString(ShopStatus);
+        dest.writeString(isOthers);
+        dest.writeString(ItemOfShopTwo);
+        dest.writeString(ItemOfShopThree);
     }
 }

@@ -103,7 +103,7 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
 
         for (SingleShop singleShop : myList
                 ) {
-            if (singleShop.getItemsofShop().equals(catName) && singleShop.getFloorIconName().equals(floorName)) {
+            if ((singleShop.getItemsofShop().equals(catName)||singleShop.getItemOfShopTwo().equals(catName)||singleShop.getItemOfShopThree().equals(catName)) && singleShop.getFloorIconName().equals(floorName)) {
                 markerList.add(singleShop);
             }
         }
@@ -153,7 +153,7 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
             params.topMargin = (int) (marginTopFromMethod * d);
 
         } else {
-
+            Log.e("tageese", "setMarker:left " + aleft + " right " + aright);
             params.leftMargin = (int) (aleft * d);
             params.topMargin = (int) (aright * d);
 

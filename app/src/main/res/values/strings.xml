@@ -4,4 +4,5 @@
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_map_">Map_Activity</string>
     <string name="title_activity_single_shop">SingleShop</string>
+    <string name="title_activity_others">OthersActivity</string>
 </resources>

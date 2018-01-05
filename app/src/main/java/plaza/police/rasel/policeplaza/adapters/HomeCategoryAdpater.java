@@ -23,14 +23,23 @@ public class HomeCategoryAdpater extends RecyclerView.Adapter<HomeCategoryAdpate
 
     List<SingleShop> singleShops = new ArrayList<>();
     OnClickCategory onClickCategory;
+    int mTrackValue;
 
     public void setOnClickCategory(OnClickCategory onClickCategory) {
         this.onClickCategory = onClickCategory;
     }
 
+
+
     public HomeCategoryAdpater(List<SingleShop> singleShops) {
         this.singleShops = singleShops;
     }
+
+    public HomeCategoryAdpater(List<SingleShop> singleShops,int track) {
+        this.singleShops = singleShops;
+        this.mTrackValue=track;
+    }
+
 
     @Override
     public HomeCategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,7 +48,13 @@ public class HomeCategoryAdpater extends RecyclerView.Adapter<HomeCategoryAdpate
 
     @Override
     public void onBindViewHolder(HomeCategoryViewHolder holder, int position) {
-        holder.textCatName.setText(singleShops.get(position).getItemsofShop());
+
+        if (mTrackValue==2){
+            holder.textCatName.setText(singleShops.get(position).getItemOfShopTwo());
+        }else {
+            holder.textCatName.setText(singleShops.get(position).getItemsofShop());
+        }
+
 
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(singleShops.get(position).getCatIconName(), "drawable", holder.itemView.getContext().getPackageName());
 

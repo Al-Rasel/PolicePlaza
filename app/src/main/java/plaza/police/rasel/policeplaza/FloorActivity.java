@@ -66,8 +66,10 @@ public class FloorActivity extends AppCompatActivity {
 
         for (SingleShop sort : myList
                 ) {
-            if (catName.equals(sort.getItemsofShop()))
+            if (catName.equals(sort.getItemsofShop())|| catName.equals(sort.getItemOfShopTwo())|| catName.equals(sort.getItemOfShopThree())){
                 selectedFloor.add(sort);
+            }
+
         }
 
 
