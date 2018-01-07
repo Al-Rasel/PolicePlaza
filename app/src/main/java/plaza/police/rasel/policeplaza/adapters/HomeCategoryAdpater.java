@@ -24,22 +24,26 @@ public class HomeCategoryAdpater extends RecyclerView.Adapter<HomeCategoryAdpate
     List<SingleShop> singleShops = new ArrayList<>();
     OnClickCategory onClickCategory;
     int mTrackValue;
+    String check = "ooo";
 
     public void setOnClickCategory(OnClickCategory onClickCategory) {
         this.onClickCategory = onClickCategory;
     }
 
 
-
     public HomeCategoryAdpater(List<SingleShop> singleShops) {
         this.singleShops = singleShops;
     }
 
-    public HomeCategoryAdpater(List<SingleShop> singleShops,int track) {
+    public HomeCategoryAdpater(List<SingleShop> singleShops, int track) {
         this.singleShops = singleShops;
-        this.mTrackValue=track;
+        this.mTrackValue = track;
     }
 
+    public HomeCategoryAdpater(List<SingleShop> singleShops, String track) {
+        this.singleShops = singleShops;
+        this.check = track;
+    }
 
     @Override
     public HomeCategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,10 +53,22 @@ public class HomeCategoryAdpater extends RecyclerView.Adapter<HomeCategoryAdpate
     @Override
     public void onBindViewHolder(HomeCategoryViewHolder holder, int position) {
 
-        if (mTrackValue==2){
+        if (mTrackValue == 2) {
             holder.textCatName.setText(singleShops.get(position).getItemOfShopTwo());
-        }else {
-            holder.textCatName.setText(singleShops.get(position).getItemsofShop());
+        } else {
+
+            if (check.equals("ch")) {
+
+                if (singleShops.get(position).getItemsofShop().equals("Others")) {
+                    holder.textCatName.setText(singleShops.get(position).getItemOfShopTwo());
+                } else {
+                    holder.textCatName.setText(singleShops.get(position).getItemsofShop());
+                }
+
+            } else {
+                holder.textCatName.setText(singleShops.get(position).getItemsofShop());
+            }
+
         }
 
 

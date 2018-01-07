@@ -110,7 +110,7 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         int i = 0;
         for (SingleShop markerList1 : markerList
                 ) {
-            setMarker(Integer.parseInt(markerList1.getMarginLeft()), Integer.parseInt(markerList1.getMarginRight()), markerList1.getShopName(), i);
+            setMarker(Integer.parseInt(markerList1.getMarginLeft()), Integer.parseInt(markerList1.getMarginRight()), markerList1.getShopName(), i,Integer.parseInt(markerList1.getFloorNo()));
             i++;
         }
 
@@ -118,7 +118,7 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                Map_Activity.this.finish();
             }
         });
     }
@@ -133,10 +133,15 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void setMarker(int marginLeftFromMethod, int marginTopFromMethod, String ShopName, int id) {
+    public void setMarker(int marginLeftFromMethod, int marginTopFromMethod, String ShopName, int id,int floor) {
 
         int aleft = (int) (1.26865 * marginLeftFromMethod);
         int aright = (int) (1.428571 * marginTopFromMethod);
+
+        if (floor!=1){
+            aleft=(int)(1.67*aleft);
+            aright=(int)(1.52*aright);
+        }
         float d = getResources().getDisplayMetrics().density;
         int marginleft = (int) (100 * d);
 

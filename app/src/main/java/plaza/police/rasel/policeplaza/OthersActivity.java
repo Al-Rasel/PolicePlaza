@@ -188,7 +188,7 @@ public class OthersActivity extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                OthersActivity.this.finish();
             }
         });
 

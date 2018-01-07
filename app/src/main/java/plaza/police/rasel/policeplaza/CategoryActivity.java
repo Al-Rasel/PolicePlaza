@@ -75,21 +75,41 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         for (SingleShop item : floorWiseCats) {
-            if (titles.add(item.getItemsofShop())) {
-                result.add(item);
+            if(item.getIsOthers().equals("0")){
+                if (titles.add(item.getItemsofShop())) {
+                    result.add(item);
+                }
+            } else {
+
+                if (titles.add(item.getItemOfShopTwo())) {
+                    result.add(item);
+                }
+
+
             }
+
+
         }
 
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.RV_Category);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
-        HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result);
+        HomeCategoryAdpater homeCategoryAdpater = new HomeCategoryAdpater(result,"ch");
 
         homeCategoryAdpater.setOnClickCategory(new HomeCategoryAdpater.OnClickCategory() {
             @Override
             public void onClickCategory(int position) {
-                startActivity(new Intent(getApplicationContext(), Map_Activity.class).putExtra("allShops", myList).putExtra("catName", result.get(position).getItemsofShop()).putExtra("floorName", floorIconName));
+
+                if (result.get(position).getItemsofShop().equals("Others")){
+                    startActivity(new Intent(getApplicationContext(), Map_Activity.class).putExtra("allShops", myList).putExtra("catName", result.get(position).getItemOfShopTwo()).putExtra("floorName", floorIconName));
+
+                }else {
+                    startActivity(new Intent(getApplicationContext(), Map_Activity.class).putExtra("allShops", myList).putExtra("catName", result.get(position).getItemsofShop()).putExtra("floorName", floorIconName));
+
+                }
+
+
 
             }
         });
@@ -100,7 +120,7 @@ public class CategoryActivity extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                CategoryActivity.this.finish();
             }
         });
 

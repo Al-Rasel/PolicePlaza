@@ -105,7 +105,7 @@ public class FloorActivity extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                FloorActivity.this.finish();
             }
         });
     }
