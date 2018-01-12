@@ -1,31 +1,27 @@
 package plaza.police.rasel.policeplaza;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import plaza.police.rasel.policeplaza.model.SingleShop;
-import ss.com.bannerslider.banners.Banner;
-import ss.com.bannerslider.banners.DrawableBanner;
-import ss.com.bannerslider.views.BannerSlider;
 
 public class SingleShopActivity extends AppCompatActivity {
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
+    TextView textViewNoImages;
+    List<Integer> myImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +32,10 @@ public class SingleShopActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_single_shop);
+        textViewNoImages = (TextView) findViewById(R.id.noImage);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
 
         int shopID = getIntent().getIntExtra("id", 0);
         ArrayList<SingleShop> myList = getIntent().getExtras().getParcelableArrayList("shoplist");
@@ -53,13 +53,6 @@ public class SingleShopActivity extends AppCompatActivity {
         }
 
 
-        BannerSlider bannerSlider = (BannerSlider) findViewById(R.id.banner_slider1);
-
-        List<Banner> banners = new ArrayList<>();
-
-
-
-
         int drawableResourceId1 = getResources().getIdentifier(singleShop.getShopImageOneName(), "drawable", getPackageName());
 
 
@@ -67,35 +60,34 @@ public class SingleShopActivity extends AppCompatActivity {
         int drawableResourceId3 = getResources().getIdentifier(singleShop.getShopImageThreeName(), "drawable", getPackageName());
 
 
-
-
-        if (drawableResourceId1==0){
-             drawableResourceId1 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_1", "drawable", getPackageName());
-
+        if (drawableResourceId1 == 0) {
+            drawableResourceId1 = getResources().getIdentifier("a" + singleShop.getShopNO() + "_1", "drawable", getPackageName());
 
 
         }
-        if (drawableResourceId2==0){
-             drawableResourceId2 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_2", "drawable", getPackageName());
+        if (drawableResourceId2 == 0) {
+            drawableResourceId2 = getResources().getIdentifier("a" + singleShop.getShopNO() + "_2", "drawable", getPackageName());
 
         }
 
 
-        if (drawableResourceId3==0){
-            drawableResourceId3 = getResources().getIdentifier("a"+singleShop.getShopNO()+"_3", "drawable", getPackageName());
+        if (drawableResourceId3 == 0) {
+            drawableResourceId3 = getResources().getIdentifier("a" + singleShop.getShopNO() + "_3", "drawable", getPackageName());
 
         }
 
         if (drawableResourceId1 != 0) {
 
+            myImages.add(drawableResourceId1);
 
-            banners.add(new DrawableBanner(drawableResourceId1));
         }
         if (drawableResourceId2 != 0) {
-            banners.add(new DrawableBanner(drawableResourceId2));
+            myImages.add(drawableResourceId2);
+
         }
         if (drawableResourceId3 != 0) {
-            banners.add(new DrawableBanner(drawableResourceId3));
+            myImages.add(drawableResourceId3);
+
         }
 
 
@@ -104,32 +96,45 @@ public class SingleShopActivity extends AppCompatActivity {
 
         //add banner using resource drawable
 
-        bannerSlider.setBanners(banners);
 
-        LinearLayout shopDeatlis = (LinearLayout) findViewById(R.id.shopDetails);
-
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        Glide.with(this).load(R.drawable.back_second).asBitmap().into(new SimpleTarget<Bitmap>(width, height) {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Drawable drawable = new BitmapDrawable(getResources(), resource);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    shopDeatlis.setBackground(drawable);
-                }
-            }
-        });
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SingleShopActivity.this.finish();
+                onBackPressed();
 
             }
         });
     }
 
+
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            try {
+                return ScreenSlidePageFragment.newInstance(myImages.get(position));
+            } catch (Exception e) {
+
+                if (myImages.size()==0){
+                    mPager.setVisibility(View.GONE);
+                    textViewNoImages.setVisibility(View.VISIBLE);
+                }
+
+                return ScreenSlidePageFragment.newInstance(0);
+            }
+
+
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+    }
 }
+
+

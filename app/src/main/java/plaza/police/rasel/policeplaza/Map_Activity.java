@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,8 +22,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import plaza.police.rasel.policeplaza.model.SingleShop;
-
-import static com.bumptech.glide.load.engine.DiskCacheStrategy.ALL;
 
 public class Map_Activity extends AppCompatActivity implements View.OnClickListener {
     RelativeLayout mRelativeLayout;
@@ -46,6 +45,10 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         String catName = getIntent().getStringExtra("catName");
         String floorName = getIntent().getStringExtra("floorName");
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
 
         Log.e("floors", "onCreate: " + catName + "  " + floorName + "   " + String.valueOf(myList));
 
@@ -55,9 +58,8 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
             Glide
                     .with(this)
                     .load(R.drawable.floor_g)
-                    .asBitmap()
-                    .atMost()
-                    .diskCacheStrategy(ALL)
+                  .override(width,height)
+
                     .into(imageViewMap);
 
         } else if (floorName.equals("f_one")) {
@@ -65,36 +67,32 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
             Glide
                     .with(this)
                     .load(R.drawable.f_one_map)
-                    .asBitmap()
-                    .atMost()
-                    .diskCacheStrategy(ALL)
+                    .override(width,height)
+
                     .into(imageViewMap);
         } else if (floorName.equals("f_two")) {
             ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
             Glide
                     .with(this)
                     .load(R.drawable.f_two_map)
-                    .asBitmap()
-                    .atMost()
-                    .diskCacheStrategy(ALL)
+                    .override(width,height)
+
                     .into(imageViewMap);
         } else if (floorName.equals("f_three")) {
             ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
             Glide
                     .with(this)
                     .load(R.drawable.f_three_map)
-                    .asBitmap()
-                    .atMost()
-                    .diskCacheStrategy(ALL)
+                    .override(width,height)
+
                     .into(imageViewMap);
         } else if (floorName.equals("f_four")) {
             ImageView imageViewMap = (ImageView) findViewById(R.id.mainImage);
             Glide
                     .with(this)
                     .load(R.drawable.f_four_map)
-                    .asBitmap()
-                    .atMost()
-                    .diskCacheStrategy(ALL)
+                    .override(width,height)
+
                     .into(imageViewMap);
         }
 
@@ -118,7 +116,7 @@ public class Map_Activity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map_Activity.this.finish();
+                onBackPressed();
             }
         });
     }

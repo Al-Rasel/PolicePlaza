@@ -6,23 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-
+    android:background="#d5000000"
     tools:context="plaza.police.rasel.policeplaza.SingleShopActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+            android:layout_width="350dp"
+            android:layout_centerInParent="true"
+            android:layout_height="300dp" />
 
-        <ss.com.bannerslider.views.BannerSlider
-            android:id="@+id/banner_slider1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:animateIndicators="true"
-            app:defaultBanner="1"
-            app:defaultIndicators="circle"
-            app:indicatorSize="4dp"
-            app:interval="5000"
-            app:loopSlides="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textSize="25sp"
+            android:id="@+id/noImage"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:text="No Image Found, Hope you get it on next update"/>
 
         <LinearLayout
             android:layout_width="match_parent"
